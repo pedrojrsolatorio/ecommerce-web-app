@@ -270,13 +270,23 @@ body {
 }
 
 .auth-link {
+  background: none;
+  border: none;
+  padding: 0;
   color: #007bff;
-  text-decoration: none;
+  font: inherit;
   font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .auth-link:hover {
   text-decoration: underline;
+}
+
+.auth-link:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
 }
 
 .checkout-container {
