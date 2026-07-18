@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Auth() {
-  const [mode, setMode] = useState("signup");
+  const location = useLocation();
+  const [mode, setMode] = useState(location.state?.mode || "signup");
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const { signUp, login } = useAuth();
+
+  useEffect(() => {
+    if (location.state?.mode) {
+      setMode(location.state.mode);
+    }
+  }, [location.state]);
 
   const {
     register,
@@ -90,17 +97,25 @@ export default function Auth() {
             {mode === "signup" ? (
               <p>
                 Already have an account?{" "}
-                <span className="auth-link" onClick={() => setMode("login")}>
+                <button
+                  type="button"
+                  className="auth-link"
+                  onClick={() => setMode("login")}
+                >
                   Login
-                </span>
+                </button>
               </p>
             ) : (
               <p>
                 {" "}
                 Don't have an account?{" "}
-                <span className="auth-link" onClick={() => setMode("signup")}>
+                <button
+                  type="button"
+                  className="auth-link"
+                  onClick={() => setMode("signup")}
+                >
                   Sign Up
-                </span>
+                </button>
               </p>
             )}
           </div>
